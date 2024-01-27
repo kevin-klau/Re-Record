@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import treble from './Assets/treble.png';
 const Home = () => {
     return (    
-      <div className="App">
+    <div className="App">
       
       <div id="titleContainer">
         <div id="titleTreble"> 

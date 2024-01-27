@@ -11,11 +11,14 @@ import treble from './Assets/treble.png';
 function App() {
   return (
     <div className="App">
+      <>
       <Routes>
         <Route path="/" element={<HomePage/>}/>
         <Route path="/demo" element={<Teach/>}/>
         <Route path="/profiles" element={<Multiplayer/>}/>
       </Routes> 
+      </>
+      
   </div>
   );
 }
