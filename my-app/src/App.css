@@ -132,3 +132,13 @@
   box-sizing: border-box;
   display: flex;
 }
+
+#multi-title{
+  background-color: #EFEFE8;
+  width: 100vw;
+  height: 100vh;
+  color: black;
+  font-family: fancyFont;
+  display:flex;
+  font-size: 10vh;
+}

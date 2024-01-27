@@ -28,8 +28,16 @@ const Home = () => {
             <img id="musicsheet1" src={musicsheet1}/>
             <img id="musicsheet" src={musicsheet}/>
             <img id="musicsheet1" src={musicsheet1}/>
+            <img id="musicsheet" src={musicsheet}/>
+            <img id="musicsheet1" src={musicsheet1}/>
+            <img id="musicsheet" src={musicsheet}/>
+            <img id="musicsheet1" src={musicsheet1}/>
           </div>
           <div id="logos-slide">
+            <img id="musicsheet" src={musicsheet}/>
+            <img id="musicsheet1" src={musicsheet1}/>
+            <img id="musicsheet" src={musicsheet}/>
+            <img id="musicsheet1" src={musicsheet1}/>
             <img id="musicsheet" src={musicsheet}/>
             <img id="musicsheet1" src={musicsheet1}/>
             <img id="musicsheet" src={musicsheet}/>
