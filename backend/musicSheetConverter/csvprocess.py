@@ -18,11 +18,14 @@ def parse_csv_file(file_path, bpm):
         for row in reader:
             duration_factor = note_factors.get(row['type'], 1)
             duration = calculate_duration(bpm, duration_factor)
-            notes.append({'note': row['note'], 'time': duration})
+            stem = 'down'
+            if row['note'] == 'C2':
+                stem = 'up'
+            notes.append({'note': row['note'], 'time': duration, 'stem': stem})
     return notes
 
 # Example
-file_path_csv = './uploads/marylittlelamb.csv'
+file_path_csv = 'test.csv'
 bpm = 80 
 parsed_notes_csv = parse_csv_file(file_path_csv, bpm)
 print(parsed_notes_csv)
