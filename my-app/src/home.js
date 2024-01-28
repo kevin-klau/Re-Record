@@ -13,7 +13,7 @@ const Home = () => {
   let Navigate = useNavigate();
   
   function clickLearn(){
-    Navigate('./learn')
+    Navigate('./upload')
   }
 
   function clickMultiplayer(){
