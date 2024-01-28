@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  background-color: #EFEFE8;
+  overflow: hidden;
 }
 
 .App-logo {
@@ -209,12 +211,16 @@
   display: inline-block;
 }
 
+#learn-slide1{
+  display: flex;
+}
+
 #learn-pause{
   animation-play-state: paused; 
 
 }
 
-#blackBar{
+#blackBarL{
   min-height:20vh;
   min-width: .3vw;
   background-color:red;
@@ -222,3 +228,29 @@
   transform:translate(5vw,-19vh);
 
 }
+
+#blackBarR{
+  min-height:20vh;
+  min-width: .3vw;
+  background-color:red;
+  position:absolute;
+  transform:translate(7vw,-19vh);
+
+}
+
+#quarterrest {
+
+}
+
+#flute {
+
+}
+
+#airpods {
+
+}
+
+#doublenote {
+
+}
+
