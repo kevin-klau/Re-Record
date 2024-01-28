@@ -220,12 +220,21 @@
 
 }
 
+#blackBar{
+  min-height:20vh;
+  min-width: .3vw;
+  background-color:red;
+  position:absolute;
+  transform:translate(5.4vw,-18vh);
+
+}
+
 #blackBarL{
   min-height:20vh;
   min-width: .3vw;
   background-color:red;
   position:absolute;
-  transform:translate(5vw,-19vh);
+  transform:translate(7.8vw,-19vh);
 
 }
 
@@ -234,7 +243,7 @@
   min-width: .3vw;
   background-color:red;
   position:absolute;
-  transform:translate(7vw,-19vh);
+  transform:translate(57.5vw,-19vh);
 
 }
 

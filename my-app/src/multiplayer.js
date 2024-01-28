@@ -2,37 +2,65 @@ import React, { useEffect, useRef, useState } from 'react';
 import Vex from 'vexflow';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import io from "socket.io-client";
+let testdata = [
+  {'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8},
+  {'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8},
+  {'note': 'D', 'magnitude': 'd', 'time': 750, 'value': 4},
+  {'note': 'C1', 'magnitude': 'c', 'time': 750, 'value': 4},
+  {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
+  {'note': 'E', 'magnitude': 'e', 'time': 1500, 'value': 2},
+  {'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8},
+  {'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8},
+  {'note': 'D', 'magnitude': 'd', 'time': 750, 'value': 4},
+  {'note': 'C1', 'magnitude': 'c', 'time': 750, 'value': 4},
+  {'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4},
+  {'note': 'F', 'magnitude': 'f', 'time': 1500, 'value': 2},
+  {'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8},
+  {'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8},
+  {'note': 'C2', 'magnitude': 'c', 'time': 750, 'value': 4},
+  {'note': 'A', 'magnitude': 'a', 'time': 750, 'value': 4},
+  {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
+  {'note': 'D', 'magnitude': 'd', 'time': 1500, 'value': 2},
+  {'note': 'B', 'magnitude': 'b', 'time': 375, 'value': 8},
+  {'note': 'B', 'magnitude': 'b', 'time': 375, 'value': 8},
+  {'note': 'A', 'magnitude': 'a', 'time': 750, 'value': 4},
+  {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
+  {'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4},
+  {'note': 'F', 'magnitude': 'f', 'time': 1500, 'value': 2}
+]
 
 const Learn = () => {
     const [start, setStart] = useState(false);
     const [frame, setFrame] = useState("");
     const [isPlaying, setIsPlaying] = useState(false);
-    const [note, setNote] = useState("");
+    const [isPlaying1, setIsPlaying1] = useState(false)
+    const [noteP1, setNoteP1] = useState("");
+    const [noteP2, setNoteP2] = useState("");
     const [playSpeed, setPlaySpeed] = useState(60)
     const [correct, setCorrect] = useState(false);
+    const [correct1, setCorrect1] = useState(false)
 
     let songLength=60;
     let pausems=375;
 
+    const changeCorrect1 = () => {
+      setCorrect1(false);
+      setCorrect1(true);
+
+      console.log("changed");
+    }
     const changeCorrect = () => {
-        setCorrect(true);
+      setCorrect(false);  
+      setCorrect(true);
 
         console.log("CHANGED")
     }
-
-    const x2 = () => {
-        setPlaySpeed(songLength/2)
+    const pause1 = () =>{
+      setIsPlaying1(true)
     }
-    
-
-    const x4 = () => {
-        setPlaySpeed(songLength/4)
+    const stop1 = () =>{
+      setIsPlaying1(false);
     }
-    
-    const x1 = () => {
-        setPlaySpeed(songLength/1)
-    }
-
     const pause = () => {
         setIsPlaying(true);
     }
@@ -54,11 +82,15 @@ const Learn = () => {
   
       socket.on("connect", handleConnect);
       socket.on("frameMultiPlayer", handleFrame);
-      socket.on("note", note => setNote(note));
+      socket.on("noteP1", note => setNoteP1(note));
+      socket.on("noteP2", note => setNoteP2(note));
+
   
       // Cleanup on component unmount
       return () => {
-        socket.off("note", note);
+        socket.off("noteP1", noteP1);
+        socket.off("noteP2", noteP2);
+
         socket.off("connect", handleConnect);
         socket.off("frameMultiPlayer", handleFrame);
         socket.disconnect();  // Ensure socket is disconnected
@@ -89,12 +121,37 @@ const Learn = () => {
             stop();
             setToggle(true); // Toggle the state
           }
+          if(toggle && correct1){
+            pause1();
+            setCorrect1(false);
+          } else {
+            setNoteP1();
+          }
         }, 950); // Interval set for 3 seconds
     
         return () => clearInterval(interval);
-      }, [correct]); // Dependency on toggle state
-    
+      }, [correct, correct1]); // Dependency on toggle state
+      
+      const[currIndex, setCurrIndex] = useState(0);
+      const[currIndex1, setCurrIndex1] = useState(0);
 
+      useEffect(()=>{
+        if(noteP1 == testdata[currIndex].note.toLowerCase()) {
+            console.log("CORRECT");
+            setCorrect(true);
+            setCurrIndex(currIndex+1);
+        }
+        setTimeout(50);
+    }, [noteP1])
+
+    useEffect(()=>{
+      if(noteP2 == testdata[currIndex1].note.toLowerCase()) {
+          console.log("CORRECT");
+          setCorrect1(true);
+          setCurrIndex1(currIndex1+1);
+      }
+      setTimeout(50);
+  }, [noteP2])
     useEffect(() => {
 
         let testdata = [
@@ -224,11 +281,11 @@ const Learn = () => {
                 <div id="learn-carousel">
                   
                     <div id="learn-slide1">
-                        <div id="learn-slide" style={{ width:'50vw', animation: "20s sheetmusic linear", animationPlayState: isPlaying ? 'running' : 'paused' }}>
+                        <div id="learn-slide" style={{ width:'50vw', animation: "15s sheetmusic linear", animationPlayState: isPlaying ? 'running' : 'paused' }}>
                             <div id="output" ref={outputRef}></div>
                             
                         </div>
-                        <div id="learn-slide" style={{ width:'50vw', animation: "20s sheetmusic linear", animationPlayState: isPlaying ? 'running' : 'paused' }}>
+                        <div id="learn-slide" style={{ overflowX:'none', width:'50vw', animation: "14s sheetmusic linear", animationPlayState: isPlaying1 ? 'running' : 'paused' }}>
                             <div id="outputP1" ref={outputRef1}></div>
                         </div>
                         

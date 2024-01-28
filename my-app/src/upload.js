@@ -22,6 +22,7 @@ function About(props) {
     const uploadData = (event) => {
         var element = document.getElementById("loadingContainer");
         var rect = element.getBoundingClientRect();
+
         window.scrollTo({
             left: rect.left + window.scrollX,
             top: rect.top + window.scrollY,
@@ -45,10 +46,14 @@ function About(props) {
         postMusic(selectedFile);
         console.log("data uploaded!")
 
-        Navigate('../learn')         
+        if (props.redirect === "/learn") {
+            Navigate('../learn')
+        }else{
+            Navigate('../multiplayer')
+        }
+    };
 
-
-    }
+    
 
     const bpmChange = (event) => {
         setbpm(event.target.value);
@@ -79,6 +84,6 @@ function About(props) {
             </div>
         </div>
     );
-};
+}
  
 export default About;
