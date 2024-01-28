@@ -106,3 +106,12 @@ const Multiplayer = () => {
         {/* Attach the ref to the div which will contain the sheet music */}
         <div id="output" ref={outputRef}></div>
       </div>
+      <div id="multi-titlecontainer">
+        <div id="multi-title">Multiplayer</div>
+      </div>
+      
+    </div>
+  );
+};
+
+export default Multiplayer;

@@ -124,33 +124,9 @@ const Learn = () => {
                     
                 </div>
             </div>
-            <div id="multi-titlecontainer">
-                <div id="rectangle">
-                <img src={`data:image/jpeg;base64,${frame}`} alt="Stream Fail" style={{height:'100%'}}/>
-                    <div id="timer">
-                    
-
-                        {showTimer && ( // Render the timer only if showTimer is true
-                            <CountdownCircleTimer
-                                isPlaying
-                                duration={10}
-                                colors={[
-                                    ['#red', 0.33],
-                                    ['#red', 0.33],
-                                    ['#red', 0.33],
-                                ]}
-                                onComplete={handleTimerComplete}
-                            >
-                                {({ remainingTime }) => (
-                                    <span id="timeCount">
-                                        {remainingTime}
-                                    </span>
-                                )}
-                            </CountdownCircleTimer>
-                        )}
-                    </div>
-
-                </div>
+            <div id="loadingContainer">
+                <img src={loading} id="loadingImage" alt="urmom"/>
+                <h1 style={{marginLeft:"5vw"}}>Please wait while we load!</h1>
             </div>
 
         </div>
