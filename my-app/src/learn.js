@@ -6,7 +6,40 @@ import io from "socket.io-client";
 const Learn = () => {
     const [start, setStart] = useState(false);
     const [frame, setFrame] = useState("");
-  
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [note, setNote] = useState("");
+    const [playSpeed, setPlaySpeed] = useState(60)
+    const [correct, setCorrect] = useState(false);
+
+    let songLength=60;
+    let pausems=375;
+
+    const changeCorrect = () => {
+        setCorrect(true);
+
+        console.log("CHANGED")
+    }
+
+    const x2 = () => {
+        setPlaySpeed(songLength/2)
+    }
+    
+
+    const x4 = () => {
+        setPlaySpeed(songLength/4)
+    }
+    
+    const x1 = () => {
+        setPlaySpeed(songLength/1)
+    }
+
+    const pause = () => {
+        setIsPlaying(true);
+    }
+    const stop = () => {
+        setIsPlaying(false);
+    }
+
     useEffect(() => {
       // Define the socket here so it's available in the entire scope of useEffect
       const socket = io("ws://localhost:5001");
@@ -21,9 +54,11 @@ const Learn = () => {
   
       socket.on("connect", handleConnect);
       socket.on("frameMultiPlayer", handleFrame);
+      socket.on("note", note => setNote(note));
   
       // Cleanup on component unmount
       return () => {
+        socket.off("note", note);
         socket.off("connect", handleConnect);
         socket.off("frameMultiPlayer", handleFrame);
         socket.disconnect();  // Ensure socket is disconnected
@@ -40,6 +75,24 @@ const Learn = () => {
 
         return [false, 0]; // Stop the timer
     }
+
+    const [toggle, setToggle] = useState(true);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+          if (toggle && correct) {
+            pause();
+            setCorrect(false);
+            setToggle(false); // Toggle the state
+          } else {
+            stop();
+            setToggle(true); // Toggle the state
+          }
+        }, 950); // Interval set for 3 seconds
+    
+        return () => clearInterval(interval);
+      }, [correct]); // Dependency on toggle state
+    
 
     useEffect(() => {
 
@@ -69,6 +122,22 @@ const Learn = () => {
             { 'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4 },
             { 'note': 'F', 'magnitude': 'f', 'time': 1500, 'value': 2 }
         ]
+        
+        console.log('HIHI')
+        let sum = 0;
+        for (let i = 0; i < testdata.length; i++){
+            sum += testdata[i].time;
+        }
+        console.log(sum)
+        songLength=sum/1000;
+
+        for (let i = 0; i < testdata.length; i++){
+            if(testdata[i].value === 8) {
+                pausems=testdata[i].time;
+                break;
+            }
+        }
+        
 
 
         if (outputRef.current) {
@@ -117,16 +186,43 @@ const Learn = () => {
                 {/* Attach the ref to the div which will contain the sheet music */}
                 <div id="learn-carousel">
                     <div id="learn-slide1">
-                        <div id="learn-slide">
+                        <div id="learn-slide" style={{ animation: "20s sheetmusic linear", animationPlayState: isPlaying ? 'running' : 'paused' }}>
                             <div id="output" ref={outputRef}></div>
                         </div>
                     </div>
                     
                 </div>
+               
             </div>
-            <div id="loadingContainer">
-                <img src={loading} id="loadingImage" alt="urmom"/>
-                <h1 style={{marginLeft:"5vw"}}>Please wait while we load!</h1>
+            <div id="blackBar"></div>
+            <div id="multi-titlecontainer">
+                <button onClick={changeCorrect}>meow</button>
+                <div id="rectangle">
+                <img src={`data:image/jpeg;base64,${frame}`} alt="Stream Fail" style={{height:'100%'}}/>
+                    <div id="timer">
+                    
+
+                        {showTimer && ( // Render the timer only if showTimer is true
+                            <CountdownCircleTimer
+                                isPlaying
+                                duration={10}
+                                colors={[
+                                    ['#red', 0.33],
+                                    ['#red', 0.33],
+                                    ['#red', 0.33],
+                                ]}
+                                onComplete={handleTimerComplete}
+                            >
+                                {({ remainingTime }) => (
+                                    <span id="timeCount">
+                                        {remainingTime}
+                                    </span>
+                                )}
+                            </CountdownCircleTimer>
+                        )}
+                    </div>
+
+                </div>
             </div>
 
         </div>

@@ -6,6 +6,8 @@ const Multiplayer = () => {
   const outputRef = useRef(null); // Create a ref for the DOM element
   const [start, setStart] = useState(false);
   const [frame, setFrame] = useState("");
+  const [noteP1, setNoteP1] = useState("");
+  const [noteP2, setNoteP2] = useState("");
 
   useEffect(() => {
     // Define the socket here so it's available in the entire scope of useEffect
@@ -21,11 +23,15 @@ const Multiplayer = () => {
 
     socket.on("connect", handleConnect);
     socket.on("frameMultiPlayer", handleFrame);
+    socket.on("noteP1", note => setNoteP1(note));
+    socket.on("noteP2", note => setNoteP2(note));
 
     // Cleanup on component unmount
     return () => {
       socket.off("connect", handleConnect);
       socket.off("frameMultiPlayer", handleFrame);
+      socket.off("noteP1", note => setNoteP1(note));
+      socket.off("noteP2", note => setNoteP2(note));
       socket.disconnect();  // Ensure socket is disconnected
       console.log("Socket disconnected on component unmount");
     };
@@ -109,15 +115,6 @@ const Multiplayer = () => {
       <div id="multi-titlecontainer">
         <div id="multi-title">Multiplayer</div>
       </div>
-<<<<<<< HEAD
-      <div className="Application">
-        {/*
-        <Blink color='blue' text='TestReactApp' fontSize='20'>
-          Testing the Blink
-  </Blink> */}
-      </div>
-=======
->>>>>>> ad431480c378e00fa3176a22be024e8de3168d3e
       
     </div>
   );
