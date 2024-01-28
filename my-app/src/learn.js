@@ -6,6 +6,7 @@ import io from "socket.io-client";
 const Learn = () => {
     const [start, setStart] = useState(false);
     const [frame, setFrame] = useState("");
+    const [loading, setLoading] = useState(false);
   
     useEffect(() => {
       // Define the socket here so it's available in the entire scope of useEffect
