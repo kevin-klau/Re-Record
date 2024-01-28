@@ -42,11 +42,11 @@ const Multiplayer = () => {
 
       const length = testdata.length
       // Configure the rendering context.
-      renderer.resize(window.innerWidth-10, 120); // Adjust the size accordingly
+      renderer.resize(window.innerWidth, 120); // Adjust the size accordingly
       const context = renderer.getContext();
 
       // Create a stave at position 10 on the canvas.
-      const stave = new Stave(10, 0, length*69.5); // Width to match the renderer width
+      const stave = new Stave(10, 0, window.innerWidth); // Width to match the renderer width
       stave.addClef("treble").addTimeSignature("4/4");
       stave.setContext(context).draw();
 
