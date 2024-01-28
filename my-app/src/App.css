@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  background-color: #EFEFE8;
+  position: relative;
+  overflow: hidden;
 }
 
 .App-logo {
@@ -60,10 +63,6 @@
   font-size:9vw;
   margin-top: 25vh;
   margin-bottom:0px;
-}
-
-#titleContainer{
-
 }
 
 #titleTreble{
@@ -200,4 +199,29 @@
   padding: 0;
   box-sizing: border-box;
   display: flex;
+}
+
+#icons{
+  position: absolute;
+}
+
+#quarterrest {
+  margin-top: 50vh;
+  margin-left: 20vh;
+  /* Make sure the icons have a defined size and z-index */
+  z-index: 5;
+}
+
+#flute {
+  margin-left: 20vh;
+}
+
+#airpods {
+  margin-left: 110vh;
+  margin-bottom: -20vh;
+}
+
+#doublenote {
+  margin-top: 70vh;
+  margin-left: 10vh;
 }
