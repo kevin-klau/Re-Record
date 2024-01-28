@@ -142,3 +142,13 @@
   display:flex;
   font-size: 10vh;
 }
+
+#output svg{
+  background-color: #EFEFE8;
+  display: block;
+  padding-right: -10vw;
+}
+
+#multi{
+  overflow: hidden;
+}

@@ -4,6 +4,7 @@ import Vex from 'vexflow';
 const Multiplayer = () => {
   const outputRef = useRef(null); // Create a ref for the DOM element
   useEffect(() => {
+    
     let testdata = [
       {'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8},
       {'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8},
@@ -32,55 +33,55 @@ const Multiplayer = () => {
     ]
     
 
-    const { Renderer, Stave, StaveNote, Voice, Formatter } = Vex.Flow;
+    if (outputRef.current) {
+      outputRef.current.innerHTML = '';
+      const { Renderer, Stave, StaveNote, Voice, Formatter } = Vex.Flow;
 
-    // Create an SVG renderer and attach it to the DIV element named "boo".
-    const div = document.getElementById("output");
-    const renderer = new Renderer(div, Renderer.Backends.SVG);
+      // Create an SVG renderer and attach it to the DOM element.
+      const renderer = new Renderer(outputRef.current, Renderer.Backends.SVG);
 
-    // Configure the rendering context.
-    renderer.resize(500, 500);
-    const context = renderer.getContext();
+      const length = testdata.length
+      // Configure the rendering context.
+      renderer.resize(window.innerWidth-10, 120); // Adjust the size accordingly
+      const context = renderer.getContext();
 
-    let length = testdata.length
-    // Create a stave of width 400 at position 10, 40 on the canvas.
-    const stave = new Stave(10, 80, 200 * length);
+      // Create a stave at position 10 on the canvas.
+      const stave = new Stave(10, 0, length*69.5); // Width to match the renderer width
+      stave.addClef("treble").addTimeSignature("4/4");
+      stave.setContext(context).draw();
 
-    // Add a clef and time signature.
-    stave.addClef("treble").addTimeSignature("4/4");
+      // Map your testdata to VexFlow StaveNotes
+      const notes = testdata.map(data => {
+        const noteKey = data.magnitude + (data.note === 'C2' ? '/5' : '/4');
+        return new StaveNote({
+          keys: [noteKey],
+          duration: String(data.value),
+        });
+      });
 
-    // Connect it to the rendering context and draw!
-    stave.setContext(context).draw();
-
-    let notes = [];
-    testdata.forEach(data => {
-      let denom = '4';
-      if (data.note === 'C2') denom = '5'
-      notes.push(new StaveNote({ keys: [`${data.magnitude}/${denom}`], duration: `${data.value}`}))
-    });
-  
-      // Create a voice in 4/4 and add above notes
+      // Create a voice in 4/4 and add the notes
       const voice = new Voice({ num_beats: 4, beat_value: 4 });
-      voice.setStrict(false)
+      voice.setStrict(false); // Disable the total duration check of the voice
       voice.addTickables(notes);
-      
-      // Format and justify the notes to 400 pixels.
-      new Formatter().joinVoices([voice]).format([voice], 350);
-      
-      // Render voice
-      voice.draw(context, stave);
 
+      // Format and justify the notes to the width of the stave
+      new Formatter().joinVoices([voice]).format([voice], 1500);
+
+      // Draw the voice
+      voice.draw(context, stave);
+    }
   }, []);
 
   return (
-    <div>
+    <div id="multi">
+      <div id="sheet-music-container">
+        {/* Attach the ref to the div which will contain the sheet music */}
+        <div id="output" ref={outputRef}></div>
+      </div>
       <div id="multi-titlecontainer">
         <div id="multi-title">Multiplayer</div>
       </div>
-      <div id="sheet-music-container">
-        {/* Attach the ref to the div which will contain the sheet music */}
-        <div id="output"></div>
-      </div>
+      
     </div>
   );
 };
