@@ -1,0 +1,93 @@
+@font-face {
+    font-family: fancyFont;
+    src: url("Assets/EuphoriaScript-Regular.ttf") format("opentype")
+  }
+  
+  @font-face {
+    font-family: textFont;
+    src: url("Assets/AnticSlab-Regular.ttf") format("opentype")
+  }
+
+  #learnContainer{
+    background-color: #EFEFE8;
+    width: 200vw;
+    height: 100vh;
+    color: black;
+    font-family: textFont;
+    display:flex;
+  }
+
+  #uploadContainer{
+    min-width: 100vw;
+  }
+
+  #uploadText{
+    font-family:textFont;
+    font-size: 20vw;
+  }
+
+  #uploadGroup{
+    padding:2vw 19vw 2vw 19vw;  
+    border: 0.3vw dashed black;
+    border-radius: 6vw;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+    margin-top: 20vh;
+    margin-bottom: 1vh;
+  }
+
+  #uploadGroup:hover{
+    background-color: #D9D9D9;
+    cursor: grab;  
+  }
+
+  #uploadImage{
+    width: 8vw;
+  }
+
+  #bpmText{
+    display:inline-block;
+    font-size: 3vw;
+    margin-right: 1vw;
+  }
+
+  #bpmInput{
+    font-size: 3vw;
+    border-color: transparent;
+    background-color:#D9D9D9;
+    width: 7vw;
+    border-radius: 1.2vw;
+    border: rgb(129, 129, 129) 0.2vw solid;
+  }
+
+  #bpmInput:focus{
+    border-color: none;
+    background-color: rgb(171, 171, 171);
+  }
+
+  #uploadButton{
+    font-size: 3vw;
+    padding: 1vw 3vw 1vw 3vw;
+    background-color:#D9D9D9;
+    border-radius: 2vw;
+    border: rgb(129, 129, 129) 0.2vw solid;
+    transition: 0.2s;
+  }
+
+  #uploadButton:hover{
+    background-color: rgb(199, 199, 199);
+  }
+
+  #loadingContainer{
+    align-items: center;
+        justify-content: center;
+        display: flex;
+    min-width: 100vw;
+  }
+
+  #loadingImage{
+    justify-content: center;
+    align-items: center;
+    width: 50vw;
+  }
