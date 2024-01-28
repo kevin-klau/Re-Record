@@ -25,12 +25,8 @@ const Home = () => {
 
     return (    
     <div className="App">
-      <div id="icons">
-        <img id="quarterrest" src={quarterrest}/>
-        <img id="flute" src={flute}/>
-        <img id="airpods" src={airpods}/>
-        <img id="doublenote" src={doublenote}/>
-      </div>
+      
+      
       
       <div id="titleContainer">
         

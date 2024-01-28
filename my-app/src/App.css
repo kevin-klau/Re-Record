@@ -1,7 +1,6 @@
 .App {
   text-align: center;
   background-color: #EFEFE8;
-  position: relative; 
   overflow: hidden;
 }
 
@@ -221,34 +220,37 @@
 
 }
 
-#icons{
-  position: absolute;
-}
-
-#blackBar{
+#blackBarL{
   min-height:20vh;
   min-width: .3vw;
   background-color:red;
   position:absolute;
-  transform:translate(7vw,-19vh);
+  transform:translate(5vw,-19vh);
+
+}
+
+#blackBarR{
+  min-height:20vh;
+  min-width: .3vw;
+  background-color:red;
+  position:absolute;
+  transform:translate(55vw,-19vh);
 
 }
 
 #quarterrest {
-  margin-top: 60vh;
-  margin-left: 20vh;
+
 }
 
 #flute {
-  margin-left: 20vh;
+
 }
 
 #airpods {
-  margin-top: 10vh;
-  margin-left: 120vh;
+
 }
 
 #doublenote {
-  margin-top: 20vh;
-  margin-left: 20vh;
+
 }
+

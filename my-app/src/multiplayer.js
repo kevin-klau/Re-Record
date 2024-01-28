@@ -139,50 +139,82 @@ const Learn = () => {
             }
         }
         
+        if(outputRef.current){
+          outputRef.current.innerHTML = '';
+          const { Renderer, Stave, StaveNote, Voice, Formatter } = Vex.Flow;
+          const renderer = new Renderer(outputRef.current, Renderer.Backends.SVG);
 
+          const length = testdata.length
+          renderer.resize((window.innerWidth/2), 120); // Adjust the size accordingly
+          const context = renderer.getContext();
 
-        if (outputRef.current) {
-            outputRef.current.innerHTML = '';
+          const stave = new Stave(50, 0, (window.innerWidth/2)); // Width to match the renderer width
+          stave.addClef("treble").addTimeSignature("4/4");
+          stave.setContext(context).draw();
+
+          const notes = testdata.map(data => {
+            const noteKey = data.magnitude + (data.note === 'C2' ? '/5' : '/4');
+            return new StaveNote({
+                keys: [noteKey],
+                duration: String(data.value),
+            });
+          });
+
+          const voice = new Voice({ num_beats: 4, beat_value: 4 });
+          voice.setStrict(false); // Disable the total duration check of the voice
+          voice.addTickables(notes);
+
+          new Formatter().joinVoices([voice]).format([voice], 1500);
+          voice.draw(context, stave);
+
+        }
+
+        if (outputRef1.current) {
+            outputRef1.current.innerHTML = '';
             const { Renderer, Stave, StaveNote, Voice, Formatter } = Vex.Flow;
 
             // Create an SVG renderer and attach it to the DOM element.
-            const renderer = new Renderer(outputRef.current, Renderer.Backends.SVG);
-
+            const renderer1 = new Renderer(outputRef1.current, Renderer.Backends.SVG);
+      
             const length = testdata.length
-            // Configure the rendering context.
-            renderer.resize((window.innerWidth/2), 120); // Adjust the size accordingly
-            const context = renderer.getContext();
+
+            renderer1.resize((window.innerWidth/2), 120); // Adjust the size accordingly
+            const context1 = renderer1.getContext();
 
             // Create a stave at position 10 on the canvas.
-            const stave = new Stave(50, 0, (window.innerWidth/2)); // Width to match the renderer width
-            stave.addClef("treble").addTimeSignature("4/4");
-            stave.setContext(context).draw();
+            const stave1 = new Stave(50, 0, (window.innerWidth/2)); // Width to match the renderer width
+            stave1.addClef("treble").addTimeSignature("4/4");
+            stave1.setContext(context1).draw();
           
             // Map your testdata to VexFlow StaveNotes
-            const notes = testdata.map(data => {
-                const noteKey = data.magnitude + (data.note === 'C2' ? '/5' : '/4');
+        
+
+            const notes1 = testdata.map(data => {
+                const noteKey1 = data.magnitude + (data.note === 'C2' ? '/5' : '/4');
                 return new StaveNote({
-                    keys: [noteKey],
+                    keys: [noteKey1],
                     duration: String(data.value),
                 });
             });
 
             // Create a voice in 4/4 and add the notes
-            const voice = new Voice({ num_beats: 4, beat_value: 4 });
-            voice.setStrict(false); // Disable the total duration check of the voice
-            voice.addTickables(notes);
+            
+
+            const voice1 = new Voice({ num_beats: 4, beat_value: 4 });
+            voice1.setStrict(false); // Disable the total duration check of the voice
+            voice1.addTickables(notes1);
 
             // Format and justify the notes to the width of the stave
-            new Formatter().joinVoices([voice]).format([voice], 1500);
+            new Formatter().joinVoices([voice1]).format([voice1], 1500);
 
             // Draw the voice
-            voice.draw(context, stave);
+            voice1.draw(context1, stave1);
 
         }
 
         
 
-      }, []);
+    }, []);
 
     return (
         <div id="multi">
@@ -190,24 +222,22 @@ const Learn = () => {
             <div id="sheet-music-container">
                 {/* Attach the ref to the div which will contain the sheet music */}
                 <div id="learn-carousel">
+                  
                     <div id="learn-slide1">
                         <div id="learn-slide" style={{ width:'50vw', animation: "20s sheetmusic linear", animationPlayState: isPlaying ? 'running' : 'paused' }}>
                             <div id="output" ref={outputRef}></div>
+                            
                         </div>
                         <div id="learn-slide" style={{ width:'50vw', animation: "20s sheetmusic linear", animationPlayState: isPlaying ? 'running' : 'paused' }}>
-                            <div id="output" ref={outputRef}></div>
-                        </div>
-                        <div id="learn-slide" style={{ width:'50vw', animation: "20s sheetmusic linear", animationPlayState: isPlaying ? 'running' : 'paused' }}>
-                            <div id="output" ref={outputRef}></div>
+                            <div id="outputP1" ref={outputRef1}></div>
                         </div>
                         
                     </div>
-                    
                 </div>
-                
-               
             </div>
-            <div id="blackBar"></div>
+
+            <div id="blackBarL"></div>
+            <div id="blackBarR"></div>
             <div id="multi-titlecontainer">
                 <button onClick={changeCorrect}>meow</button>
                 <div id="rectangle">
