@@ -4,6 +4,7 @@ import io from "socket.io-client";
 const SingleplayerPage = () => {
   const [start, setStart] = useState(false);
   const [frame, setFrame] = useState("");
+  const [note, setNote] = useState("");
 
   useEffect(() => {
     const socket = io("ws://localhost:5001");
@@ -18,9 +19,11 @@ const SingleplayerPage = () => {
 
     socket.on("connect", handleConnect);
     socket.on("frameSinglePlayer", handleFrame);
+    socket.on("note", note => setNote(note));
 
     // Cleanup on component unmount
     return () => {
+      socket.off("note", note)
       socket.off("connect", handleConnect);
       socket.off("frameSinglePlayer", handleFrame);
       socket.disconnect();
@@ -29,6 +32,7 @@ const SingleplayerPage = () => {
 
   return (
     <div className="stream-container">
+      <p>Note: {note}</p>
       {start ? (
         <div>
           <p>Connected to stream</p>
