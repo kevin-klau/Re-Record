@@ -188,6 +188,8 @@ def singlePlayerRun(numHands=2):
             try:
                 note = hole_toNote[tuple(holesCovered)]
                 socketio.emit("note", note)
+                print(note)
+                print(holesCovered)
 
                 overlayNoteJPG = cv2.imread(f"./backend/socketIOAPI/recorderFingering/{note}.jpg")  
                 overlay_height, overlay_width = overlayNoteJPG.shape[:2]

@@ -6,7 +6,7 @@ import uploadImage from './Assets/upload.png'
 import loading from './Assets/loading.gif'
 
 
-function About(){
+function About(props) {
     const [selectedFile, setSelectedFile] = useState(null);
     const [bpm, setbpm] = useState(60);
     const [fileTrue, setFileTrue] = useState(0);
@@ -27,11 +27,25 @@ function About(){
             top: rect.top + window.scrollY,
             behavior: 'smooth'
         });
+
+        const postMusic = async (file) => {
+            const data = new FormData();
+            data.append('csv', file);
+
+            const res = await fetch('http://127.0.0.1:49152/sheetmusic', {
+                method: 'POST',
+                body: data
+            });
+            
+            const music = await res.json();
+            console.log(music)
+            props.setCurrMusic(music.content);
+        };
+
+        postMusic(selectedFile);
         console.log("data uploaded!")
 
-
-        /*Navigate('../learn')             
-        enable above when done loading*/
+        Navigate('../learn')         
 
 
     }

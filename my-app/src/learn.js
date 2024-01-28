@@ -3,16 +3,57 @@ import Vex from 'vexflow';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import io from "socket.io-client";
 
-const Learn = () => {
+
+const Learn = (props) => {    
+    //const [testdata, setTestData] = useState(props.testdata);
+    console.log(props.testdata)
+    let testdata = props.testdata;
+  
     const [start, setStart] = useState(false);
     const [frame, setFrame] = useState("");
     const [loading, setLoading] = useState(false);
   
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [note, setNote] = useState("");
+    const [currIndex, setCurrIndex] = useState(0);
+    const [playSpeed, setPlaySpeed] = useState(60)
+    const [correct, setCorrect] = useState(false);
+
+    let songLength=60;
+    let pausems=375;
+
+    const changeCorrect = () => {
+        setCorrect(false);
+        setCorrect(true);
+
+        console.log("CHANGED")
+    }
+
+    const x2 = () => {
+        setPlaySpeed(songLength/2)
+    }
+    
+
+    const x4 = () => {
+        setPlaySpeed(songLength/4)
+    }
+    
+    const x1 = () => {
+        setPlaySpeed(songLength/1)
+    }
+
+    const pause = () => {
+        setIsPlaying(true);
+    }
+    const stop = () => {
+        setIsPlaying(false);
+    }
+
     useEffect(() => {
       // Define the socket here so it's available in the entire scope of useEffect
-      const socket = io("ws://localhost:5001");
+      const socket = io("ws://127.0.0.1:5001");
       console.log("Attempting to connect...");
-      socket.emit("multiPlayer", { data: "Initiating stream..." });
+      socket.emit("singlePlayer", { data: "Initiating stream..." });
   
       const handleConnect = () => {
         console.log("Connected successfully.");
@@ -21,12 +62,14 @@ const Learn = () => {
       const handleFrame = (data) => {setFrame(data.data);};
   
       socket.on("connect", handleConnect);
-      socket.on("frameMultiPlayer", handleFrame);
+      socket.on("frameSinglePlayer", handleFrame);
+      socket.on("note", note => setNote(note));
   
       // Cleanup on component unmount
       return () => {
+        socket.off("note", note);
         socket.off("connect", handleConnect);
-        socket.off("frameMultiPlayer", handleFrame);
+        socket.off("frameSinglePlayer", handleFrame);
         socket.disconnect();  // Ensure socket is disconnected
         console.log("Socket disconnected on component unmount");
       };
@@ -42,34 +85,40 @@ const Learn = () => {
         return [false, 0]; // Stop the timer
     }
 
-    useEffect(() => {
+    const [toggle, setToggle] = useState(true);
 
-        let testdata = [
-            { 'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8 },
-            { 'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8 },
-            { 'note': 'D', 'magnitude': 'd', 'time': 750, 'value': 4 },
-            { 'note': 'C1', 'magnitude': 'c', 'time': 750, 'value': 4 },
-            { 'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4 },
-            { 'note': 'E', 'magnitude': 'e', 'time': 1500, 'value': 2 },
-            { 'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8 },
-            { 'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8 },
-            { 'note': 'D', 'magnitude': 'd', 'time': 750, 'value': 4 },
-            { 'note': 'C1', 'magnitude': 'c', 'time': 750, 'value': 4 },
-            { 'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4 },
-            { 'note': 'F', 'magnitude': 'f', 'time': 1500, 'value': 2 },
-            { 'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8 },
-            { 'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8 },
-            { 'note': 'C2', 'magnitude': 'c', 'time': 750, 'value': 4 },
-            { 'note': 'A', 'magnitude': 'a', 'time': 750, 'value': 4 },
-            { 'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4 },
-            { 'note': 'D', 'magnitude': 'd', 'time': 1500, 'value': 2 },
-            { 'note': 'B', 'magnitude': 'b', 'time': 375, 'value': 8 },
-            { 'note': 'B', 'magnitude': 'b', 'time': 375, 'value': 8 },
-            { 'note': 'A', 'magnitude': 'a', 'time': 750, 'value': 4 },
-            { 'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4 },
-            { 'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4 },
-            { 'note': 'F', 'magnitude': 'f', 'time': 1500, 'value': 2 }
-        ]
+    useEffect(() => {
+        const interval = setInterval(() => {
+          if (correct) {
+            pause();
+            setCorrect(false);
+            setToggle(false); // Toggle the state
+          } else {
+            stop();
+            setToggle(true); // Toggle the state
+          }
+        }, 730); // Interval set for 3 seconds
+    
+        return () => clearInterval(interval);
+      }, [correct]); // Dependency on toggle state
+    
+
+    useEffect(() => {
+        console.log('HIHI')
+        let sum = 0;
+        for (let i = 0; i < testdata.length; i++){
+            sum += testdata[i].time;
+        }
+        console.log(sum)
+        songLength=sum/1000;
+
+        for (let i = 0; i < testdata.length; i++){
+            if(testdata[i].value === 8) {
+                pausems=testdata[i].time;
+                break;
+            }
+        }
+        
 
 
         if (outputRef.current) {
@@ -111,6 +160,17 @@ const Learn = () => {
         }
     }, []);
 
+    useEffect(()=>{
+        if(note.toLowerCase() == testdata[currIndex].note.toLowerCase()) {
+            console.log("CORRECT");
+            setCorrect(true);
+            setCurrIndex(currIndex+1);
+            console.log(testdata[currIndex].note.toLowerCase());
+        }
+        setTimeout(50);
+    }, [note])
+
+
     return (
         <div id="multi">
 
@@ -118,16 +178,43 @@ const Learn = () => {
                 {/* Attach the ref to the div which will contain the sheet music */}
                 <div id="learn-carousel">
                     <div id="learn-slide1">
-                        <div id="learn-slide">
+                        <div id="learn-slide" style={{ animation: "20s sheetmusic linear", animationPlayState: isPlaying ? 'running' : 'paused' }}>
                             <div id="output" ref={outputRef}></div>
                         </div>
                     </div>
                     
                 </div>
+               
             </div>
-            <div id="loadingContainer">
-                <img src={loading} id="loadingImage" alt="urmom"/>
-                <h1 style={{marginLeft:"5vw"}}>Please wait while we load!</h1>
+            <div id="blackBar"></div>
+            <div id="multi-titlecontainer">
+                <button onClick={changeCorrect}>meow</button>
+                <div id="rectangle">
+                <img src={`data:image/jpeg;base64,${frame}`} alt="Stream Fail" style={{height:'100%'}}/>
+                    <div id="timer">
+                    
+
+                        {showTimer && ( // Render the timer only if showTimer is true
+                            <CountdownCircleTimer
+                                isPlaying
+                                duration={10}
+                                colors={[
+                                    ['#red', 0.33],
+                                    ['#red', 0.33],
+                                    ['#red', 0.33],
+                                ]}
+                                onComplete={handleTimerComplete}
+                            >
+                                {({ remainingTime }) => (
+                                    <span id="timeCount">
+                                        {remainingTime}
+                                    </span>
+                                )}
+                            </CountdownCircleTimer>
+                        )}
+                    </div>
+
+                </div>
             </div>
 
         </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // Importing Link from react-router-dom to 
 // navigate to different end points.
 import { Link } from "react-router-dom";
@@ -8,10 +8,13 @@ import treble from './Assets/treble.png';
 
 import musicsheet from './Assets/musicsheet.svg';
 import musicsheet1 from './Assets/musicsheet1.svg';
+import airpods from './Assets/airpods.png';
+import doublenote from './Assets/doublenote.png';
+import flute from './Assets/flute.png';
+import quarterrest from './Assets/quarterrest.png';
 
 const Home = () => {
   let Navigate = useNavigate();
-  
   function clickLearn(){
     Navigate('./upload')
   }
@@ -19,11 +22,20 @@ const Home = () => {
   function clickMultiplayer(){
     Navigate('./multiplayer')
   }
+
     return (    
     <div className="App">
+      <div id="icons">
+        <img id="quarterrest" src={quarterrest}/>
+        <img id="flute" src={flute}/>
+        <img id="airpods" src={airpods}/>
+        <img id="doublenote" src={doublenote}/>
+      </div>
       
       <div id="titleContainer">
+        
         <div id="titleTreble"> 
+          
           <img id="treble" src={treble}/>
         </div>
         <div id="titleOptions">

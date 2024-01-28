@@ -162,19 +162,36 @@
   color: #FFF;
   border-radius: 10vh;
   height: 72vh;
+  width: 80vw;
   margin-top: 5vh;
   margin-bottom: 5vh;
-  margin-left: 10vh;
-  margin-right: 10vh;
-  display: flex;
-  justify-content: center;
+  margin-left: 10vw;
+  margin-right: 10vw;
 }
 
 #timer{
-  margin-top: 20vh;
+  margin-top: -55vh;
+  align-items: center;
+  justify-content: center;
+  margin-left: 30vw;
 }
 
-@keyframes slide1 {
+#timeCount{
+  color:black;
+  font-size: 6vw;
+  font-family: textFont;
+}
+
+@keyframes blink {
+  0%, 100% {opacity: 1;}
+  50% { opacity: 0;}
+}
+
+.blinking-image{
+  animation: blink 2s infinite;
+}
+
+@keyframes sheetmusic {
   from {
     transform: translateX(0);
   }
@@ -183,21 +200,25 @@
   }
 }
 
-#learn-slide1{
+#learn{
   overflow: hidden;
   white-space: nowrap;
 }
 
 #learn-slide{
   display: inline-block;
-  animation: 400s slide infinite linear;
-  animation-delay: 3s;
 }
 
-#learn-carousel{
-  background-color: #EFEFE8;
-  margin:0;
-  padding: 0;
-  box-sizing: border-box;
-  display: flex;
+#learn-pause{
+  animation-play-state: paused; 
+
+}
+
+#blackBar{
+  min-height:20vh;
+  min-width: .3vw;
+  background-color:red;
+  position:absolute;
+  transform:translate(5vw,-19vh);
+
 }
