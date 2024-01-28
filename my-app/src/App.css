@@ -152,4 +152,17 @@
 #multi{
   overflow: hidden;
   background-color: #EFEFE8;
+  height: 100vh;
+  width: 100vw;
+}
+
+#rectangle{
+  background-color: #FFF;
+  color: #FFF;
+  border-radius: 10vh;
+  height: 72vh;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  margin-left: 10vh;
+  margin-right: 10vh;
 }
