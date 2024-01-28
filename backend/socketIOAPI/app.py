@@ -67,7 +67,7 @@ def singlePlayerRun(numHands=2):
 
 
     # Replace with your video source
-    cap = cv2.VideoCapture(1)
+    cap = cv2.VideoCapture(0)
 
     print(os.getcwd())
     while cap.isOpened():

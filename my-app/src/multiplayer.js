@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import Vex from 'vexflow';
-import Blink from 'react-blink-text';
 
 const Multiplayer = () => {
   const outputRef = useRef(null); // Create a ref for the DOM element
@@ -83,9 +82,10 @@ const Multiplayer = () => {
         <div id="multi-title">Multiplayer</div>
       </div>
       <div className="Application">
+        {/*
         <Blink color='blue' text='TestReactApp' fontSize='20'>
           Testing the Blink
-        </Blink> 
+  </Blink> */}
       </div>
       
     </div>

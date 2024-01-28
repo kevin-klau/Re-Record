@@ -24,7 +24,7 @@ const Home = () => {
       
       <div id="titleContainer">
         <div id="titleTreble"> 
-          <img id="treble" src={treble}/>
+          <img id="treble" src={treble} />
         </div>
         <div id="titleOptions">
           <h1 id="title">re-corder</h1>

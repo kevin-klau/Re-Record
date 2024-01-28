@@ -166,3 +166,12 @@
   margin-left: 10vh;
   margin-right: 10vh;
 }
+
+@keyframes blink {
+  0%, 100% {opacity: 1;}
+  50% { opacity: 0;}
+}
+
+.blinking-image{
+  animation: blink 2s infinite;
+}

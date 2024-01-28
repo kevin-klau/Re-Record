@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import Vex from 'vexflow';
-import Blink from 'react-blink-text';
 
 const Learn = () => {
   const outputRef = useRef(null); // Create a ref for the DOM element
