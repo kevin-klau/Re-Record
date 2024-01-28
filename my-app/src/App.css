@@ -154,6 +154,7 @@
   background-color: #EFEFE8;
   height: 100vh;
   width: 100vw;
+  
 }
 
 #rectangle{
@@ -165,4 +166,38 @@
   margin-bottom: 5vh;
   margin-left: 10vh;
   margin-right: 10vh;
+  display: flex;
+  justify-content: center;
+}
+
+#timer{
+  margin-top: 20vh;
+}
+
+@keyframes slide1 {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+#learn-slide1{
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#learn-slide{
+  display: inline-block;
+  animation: 400s slide infinite linear;
+  animation-delay: 3s;
+}
+
+#learn-carousel{
+  background-color: #EFEFE8;
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
 }
