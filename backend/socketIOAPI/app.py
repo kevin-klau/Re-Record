@@ -153,15 +153,18 @@ def singlePlayerRun(numHands=2):
             # Player 1
             try:
                 noteP1 = hole_toNote[tuple(holesCoveredP1)]
-                overlayNoteJPGP1 = cv2.imread(f"./backend/socketIOAPI/recorderFingering/{noteP1}.jpg")  
+                socketio.emit("noteP1", noteP1)
+                overlayNoteJPGP1 = cv2.imread(f"./backend/socketIOAPI/recorderFingering/{noteP1}.jpg")
+
                 overlay_heightP1, overlay_widthP1 = overlayNoteJPGP1.shape[:2]
                 image[y:y+overlay_heightP1, x:x+overlay_widthP1] = overlayNoteJPGP1        
             except (KeyError, AttributeError):
-                pass
+                socketio.emit("noteP1", "")
             
-            # Player 2
+            # Player 2  
             try:
                 noteP2 = hole_toNote[tuple(holesCoveredP2)]
+                socketio.emit("noteP2", noteP2)
                 overlayNoteJPGP2 = cv2.imread(f"./backend/socketIOAPI/recorderFingering/{noteP2}.jpg")
 
                 print("Overlay image loaded player 2")
@@ -179,15 +182,19 @@ def singlePlayerRun(numHands=2):
                 else:
                     print(f"Failed to load image for note: {noteP2}")
             except (KeyError, AttributeError):
-                pass
+                socketio.emit("noteP2", "")
+
         else:
             try:
                 note = hole_toNote[tuple(holesCovered)]
+                socketio.emit("note", note)
+
                 overlayNoteJPG = cv2.imread(f"./backend/socketIOAPI/recorderFingering/{note}.jpg")  
                 overlay_height, overlay_width = overlayNoteJPG.shape[:2]
                 image[y:y+overlay_height, x:x+overlay_width] = overlayNoteJPG
             except (KeyError, AttributeError):
-                pass
+                socketio.emit("note", "")
+
         
         # Show the image
         cv2.imshow('MediaPipe Hands', image)
