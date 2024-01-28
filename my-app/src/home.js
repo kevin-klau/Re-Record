@@ -20,7 +20,7 @@ const Home = () => {
   }
 
   function clickMultiplayer(){
-    Navigate('./multiplayer')
+    Navigate('./uploadMultiplayer')
   }
 
     return (    

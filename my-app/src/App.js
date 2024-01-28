@@ -44,9 +44,18 @@ function App() {
       <>
       <Routes>
         <Route path="/" element={<HomePage/>}/>
+<<<<<<< Updated upstream
         <Route path="/upload" element={<Upload setCurrMusic={setCurrMusic}/>}/>
         <Route path="/multiplayer" element={<Multiplayer/>}/>
         <Route path="/learn" element={<Learn testdata={currMusic}/>}/>
+=======
+        <Route path="/upload" element={<Upload/>}/>
+        <Route path="/uploadMultiplayer" element={<Upload/>}/>
+        <Route path="/multiplayer" element={<Multiplayer/>}/>
+        <Route path="/learn" element={<Learn/>}/>
+
+        {/* TEsting purpose only */}
+>>>>>>> Stashed changes
         <Route path="/testSingle" element={<SingleplayerPage/>}/>
         <Route path="/testMulti" element={<MultiplayerPage/>}/>
       </Routes> 
