@@ -1,2 +1,6 @@
 .venv
 node_modules
+.window.venv
+.windows.venv
+.cache
+__pycache__
