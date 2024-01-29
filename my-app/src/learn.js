@@ -188,7 +188,7 @@ const Learn = (props) => {
             </div>
             <div id="blackBar"></div>
             <div id="multi-titlecontainer">
-                <button onClick={changeCorrect}>meow</button>
+                <button onClick={changeCorrect} style={{backgroundColor:'#EFEFE8', borderColor:'#EFEFE8'}}>      </button>
                 <div id="rectangle">
                 <img src={`data:image/jpeg;base64,${frame}`} alt="Stream Fail" style={{height:'100%'}}/>
                     <div id="timer">

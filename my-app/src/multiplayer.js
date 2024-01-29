@@ -3,31 +3,50 @@ import Vex from 'vexflow';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import io from "socket.io-client";
 let testdata = [
-  {'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8},
-  {'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8},
-  {'note': 'D', 'magnitude': 'd', 'time': 750, 'value': 4},
   {'note': 'C1', 'magnitude': 'c', 'time': 750, 'value': 4},
-  {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
-  {'note': 'E', 'magnitude': 'e', 'time': 1500, 'value': 2},
-  {'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8},
-  {'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8},
-  {'note': 'D', 'magnitude': 'd', 'time': 750, 'value': 4},
   {'note': 'C1', 'magnitude': 'c', 'time': 750, 'value': 4},
   {'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4},
-  {'note': 'F', 'magnitude': 'f', 'time': 1500, 'value': 2},
-  {'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8},
-  {'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8},
-  {'note': 'C2', 'magnitude': 'c', 'time': 750, 'value': 4},
+  {'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4},
   {'note': 'A', 'magnitude': 'a', 'time': 750, 'value': 4},
+  {'note': 'A', 'magnitude': 'a', 'time': 750, 'value': 4},
+  {'note': 'G', 'magnitude': 'g', 'time': 1500, 'value': 2},
   {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
+  {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
+  {'note': 'E', 'magnitude': 'e', 'time': 750, 'value': 4},
+  {'note': 'E', 'magnitude': 'e', 'time': 750, 'value': 4},
+  {'note': 'D', 'magnitude': 'd', 'time': 750, 'value': 4},
+  {'note': 'D', 'magnitude': 'd', 'time': 750, 'value': 4},
+  {'note': 'C1', 'magnitude': 'c', 'time': 1500, 'value': 2},
+  {'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4},
+  {'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4},
+  {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
+  {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
+  {'note': 'E', 'magnitude': 'e', 'time': 750, 'value': 4},
+  {'note': 'E', 'magnitude': 'e', 'time': 750, 'value': 4},
   {'note': 'D', 'magnitude': 'd', 'time': 1500, 'value': 2},
-  {'note': 'B', 'magnitude': 'b', 'time': 375, 'value': 8},
-  {'note': 'B', 'magnitude': 'b', 'time': 375, 'value': 8},
-  {'note': 'A', 'magnitude': 'a', 'time': 750, 'value': 4},
-  {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
   {'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4},
-  {'note': 'F', 'magnitude': 'f', 'time': 1500, 'value': 2}
+  {'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4},
+  {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
+  {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
+  {'note': 'E', 'magnitude': 'e', 'time': 750, 'value': 4},
+  {'note': 'E', 'magnitude': 'e', 'time': 750, 'value': 4},
+  {'note': 'D', 'magnitude': 'd', 'time': 1500, 'value': 2},
+  {'note': 'C1', 'magnitude': 'c', 'time': 750, 'value': 4},
+  {'note': 'C1', 'magnitude': 'c', 'time': 750, 'value': 4},
+  {'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4},
+  {'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4},
+  {'note': 'A', 'magnitude': 'a', 'time': 750, 'value': 4},
+  {'note': 'A', 'magnitude': 'a', 'time': 750, 'value': 4},
+  {'note': 'G', 'magnitude': 'g', 'time': 1500, 'value': 2},
+  {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
+  {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
+  {'note': 'E', 'magnitude': 'e', 'time': 750, 'value': 4},
+  {'note': 'E', 'magnitude': 'e', 'time': 750, 'value': 4},
+  {'note': 'D', 'magnitude': 'd', 'time': 750, 'value': 4},
+  {'note': 'D', 'magnitude': 'd', 'time': 750, 'value': 4},
+  {'note': 'C1', 'magnitude': 'c', 'time': 1500, 'value': 4}
 ]
+
 
 const Learn = () => {
     const [start, setStart] = useState(false);
@@ -50,6 +69,7 @@ const Learn = () => {
       console.log("changed");
     }
     const changeCorrect = () => {
+      changeCorrect1();
       setCorrect(false);  
       setCorrect(true);
 
@@ -124,8 +144,10 @@ const Learn = () => {
           if(toggle && correct1){
             pause1();
             setCorrect1(false);
+            setToggle(false)
           } else {
-            setNoteP1();
+            stop1();
+            setToggle(true)
           }
         }, 950); // Interval set for 3 seconds
     
@@ -155,30 +177,48 @@ const Learn = () => {
     useEffect(() => {
 
         let testdata = [
-            { 'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8 },
-            { 'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8 },
-            { 'note': 'D', 'magnitude': 'd', 'time': 750, 'value': 4 },
-            { 'note': 'C1', 'magnitude': 'c', 'time': 750, 'value': 4 },
-            { 'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4 },
-            { 'note': 'E', 'magnitude': 'e', 'time': 1500, 'value': 2 },
-            { 'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8 },
-            { 'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8 },
-            { 'note': 'D', 'magnitude': 'd', 'time': 750, 'value': 4 },
-            { 'note': 'C1', 'magnitude': 'c', 'time': 750, 'value': 4 },
-            { 'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4 },
-            { 'note': 'F', 'magnitude': 'f', 'time': 1500, 'value': 2 },
-            { 'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8 },
-            { 'note': 'C1', 'magnitude': 'c', 'time': 375, 'value': 8 },
-            { 'note': 'C2', 'magnitude': 'c', 'time': 750, 'value': 4 },
-            { 'note': 'A', 'magnitude': 'a', 'time': 750, 'value': 4 },
-            { 'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4 },
-            { 'note': 'D', 'magnitude': 'd', 'time': 1500, 'value': 2 },
-            { 'note': 'B', 'magnitude': 'b', 'time': 375, 'value': 8 },
-            { 'note': 'B', 'magnitude': 'b', 'time': 375, 'value': 8 },
-            { 'note': 'A', 'magnitude': 'a', 'time': 750, 'value': 4 },
-            { 'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4 },
-            { 'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4 },
-            { 'note': 'F', 'magnitude': 'f', 'time': 1500, 'value': 2 }
+          {'note': 'C1', 'magnitude': 'c', 'time': 750, 'value': 4},
+          {'note': 'C1', 'magnitude': 'c', 'time': 750, 'value': 4},
+          {'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4},
+          {'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4},
+          {'note': 'A', 'magnitude': 'a', 'time': 750, 'value': 4},
+          {'note': 'A', 'magnitude': 'a', 'time': 750, 'value': 4},
+          {'note': 'G', 'magnitude': 'g', 'time': 1500, 'value': 2},
+          {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
+          {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
+          {'note': 'E', 'magnitude': 'e', 'time': 750, 'value': 4},
+          {'note': 'E', 'magnitude': 'e', 'time': 750, 'value': 4},
+          {'note': 'D', 'magnitude': 'd', 'time': 750, 'value': 4},
+          {'note': 'D', 'magnitude': 'd', 'time': 750, 'value': 4},
+          {'note': 'C1', 'magnitude': 'c', 'time': 1500, 'value': 2},
+          {'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4},
+          {'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4},
+          {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
+          {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
+          {'note': 'E', 'magnitude': 'e', 'time': 750, 'value': 4},
+          {'note': 'E', 'magnitude': 'e', 'time': 750, 'value': 4},
+          {'note': 'D', 'magnitude': 'd', 'time': 1500, 'value': 2},
+          {'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4},
+          {'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4},
+          {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
+          {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
+          {'note': 'E', 'magnitude': 'e', 'time': 750, 'value': 4},
+          {'note': 'E', 'magnitude': 'e', 'time': 750, 'value': 4},
+          {'note': 'D', 'magnitude': 'd', 'time': 1500, 'value': 2},
+          {'note': 'C1', 'magnitude': 'c', 'time': 750, 'value': 4},
+          {'note': 'C1', 'magnitude': 'c', 'time': 750, 'value': 4},
+          {'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4},
+          {'note': 'G', 'magnitude': 'g', 'time': 750, 'value': 4},
+          {'note': 'A', 'magnitude': 'a', 'time': 750, 'value': 4},
+          {'note': 'A', 'magnitude': 'a', 'time': 750, 'value': 4},
+          {'note': 'G', 'magnitude': 'g', 'time': 1500, 'value': 2},
+          {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
+          {'note': 'F', 'magnitude': 'f', 'time': 750, 'value': 4},
+          {'note': 'E', 'magnitude': 'e', 'time': 750, 'value': 4},
+          {'note': 'E', 'magnitude': 'e', 'time': 750, 'value': 4},
+          {'note': 'D', 'magnitude': 'd', 'time': 750, 'value': 4},
+          {'note': 'D', 'magnitude': 'd', 'time': 750, 'value': 4},
+          {'note': 'C1', 'magnitude': 'c', 'time': 1500, 'value': 4}
         ]
         
         console.log('HIHI')
@@ -296,7 +336,7 @@ const Learn = () => {
             <div id="blackBarL"></div>
             <div id="blackBarR"></div>
             <div id="multi-titlecontainer">
-                <button onClick={changeCorrect}>meow</button>
+            <button onClick={changeCorrect} style={{backgroundColor:'#EFEFE8', borderColor:'#EFEFE8'}}>      </button>
                 <div id="rectangle">
                 <img src={`data:image/jpeg;base64,${frame}`} alt="Stream Fail" style={{height:'100%'}}/>
                     <div id="timer">

@@ -39,7 +39,7 @@ function About(props) {
             });
             
             const music = await res.json();
-            console.log(music)
+            console.log(music.content)
             props.setCurrMusic(music.content);
         };
 
