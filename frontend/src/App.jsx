@@ -2,13 +2,11 @@
 import './App.css';
 import React, {useState} from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import HomePage from './home'; // Import your HomePage component
-import Upload from './upload'; // 
-import Multiplayer from './multiplayer';
-import Learn from './learn'
-import treble from './Assets/treble.png';
-import MultiplayerPage from './Pages/Multiplayer';
-import SingleplayerPage from './Pages/Singleplayer';
+import HomePage from './pages/Home'; // Import your HomePage component
+import Upload from './pages/Upload'; // 
+import Multiplayer from './pages/Multiplayer';
+import Learn from './pages/Learn';
+import treble from './assets/treble.png';
 
 
 function App() {
@@ -50,10 +48,10 @@ function App() {
         <Route path="/multiplayer" element={<Multiplayer testdata={currMusic}/>}/>
         <Route path="/learn" element={<Learn testdata={currMusic}/>}/>
 
-
-        {/* TESTING ONLY */}
+        {/* TESTING ONLY 
         <Route path="/testSingle" element={<SingleplayerPage/>}/>
         <Route path="/testMulti" element={<MultiplayerPage/>}/>
+        */}
       </Routes> 
       </>
       
